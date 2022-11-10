@@ -16,13 +16,15 @@ public class Client {
     }
 
     public static void clientServer(int port, String HOST) throws IOException {
-        try (Socket clientSocket = new Socket(HOST, port)) {
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            System.out.println("Подключение произведено");
-            String name = in.readLine();
-            System.out.println(name);
-            System.out.println("Конец");
+        try (Socket clientSocket = new Socket(HOST, port);
+        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));)
+        {
+            System.out.println("Ожидается ответ от сервера!");
+            out.println("Клиент с адреса " + clientSocket.getInetAddress() + " подключился!");
+            System.out.println(in.readLine());
+        }catch (IOException e){
+            System.out.println(e.getMessage());
         }
 
     }
